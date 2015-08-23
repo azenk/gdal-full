@@ -118,7 +118,7 @@ wget http://www.cmake.org/files/v2.8/cmake-2.8.12.2.tar.gz -nv && \
 tar xvfz cmake-2.8.12.2.tar.gz && \
 cd cmake-2.8.12.2 && \
 ./configure && \
-gmake
+make
 
 # OPENJPEG
 # Change to cmake or cmake28 depending on what is installed
