@@ -112,13 +112,19 @@ cd proj-4.8.0 && \
 ./configure --prefix=$tools/proj --with-jni=no && \
 make -j && make install
 
+if hash gmake 2>/dev/null; then 
+	gmake_cmd="gmake"
+else
+	gmake_cmd="make"
+fi
+
 # Cmake 2.8
 cd $tools &&
 wget http://www.cmake.org/files/v2.8/cmake-2.8.12.2.tar.gz -nv && \
 tar xvfz cmake-2.8.12.2.tar.gz && \
 cd cmake-2.8.12.2 && \
 ./configure && \
-make
+$gmake_cmd
 
 # OPENJPEG
 # Change to cmake or cmake28 depending on what is installed
