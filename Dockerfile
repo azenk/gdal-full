@@ -22,7 +22,8 @@ RUN wget --no-check-certificate -q \
     python setup.py build && \
     python setup.py install && \
     cd .. && \
-    rm -f master.zip
+    rm -f master.zip && \
+    rm -rf ConfigArgParse-master
 
 ENV vers 0.1
 RUN yum install -y gcc bison flex readline-devel zlib-devel make
@@ -38,7 +39,8 @@ RUN wget --no-check-certificate -q \
     tar xvfz cfitsio3360.tar.gz && \
     cd cfitsio && \
     ./configure --prefix=$PGC_GDAL_INSTALL_ROOT/cfitsio --enable-sse2 --enable-ssse3 --enable-reentrant && \
-    make -j && make install
+    make -j && make install && \
+    cd .. && rm -rf cfitsio*
 
 ENV SWIG_FEATURES -I/usr/share/swig/1.3.40/python -I/usr/share/swig/1.3.40
 RUN yum install -y gcc-c++
@@ -47,14 +49,16 @@ RUN wget --no-check-certificate -q \
     tar xvfj geos-3.4.2.tar.bz2 && \
     cd geos-3.4.2 && \
     ./configure --prefix=$PGC_GDAL_INSTALL_ROOT/geos && \
-    make -j && make install 
+    make -j && make install && \
+    cd .. && rm -rf geos*
 
 RUN wget --no-check-certificate -q\
     https://github.com/PolarGeospatialCenter/asp/raw/master/originals/proj/proj-4.8.0.tar.gz && \
     tar xvfz proj-4.8.0.tar.gz && \
     cd proj-4.8.0 && \
     ./configure --prefix=$PGC_GDAL_INSTALL_ROOT/proj --with-jni=no && \
-    make -j && make install
+    make -j && make install && \
+    cd .. && rm -rf proj*
 
 RUN wget --no-check-certificate -q \
     https://cmake.org/files/v3.4/cmake-3.4.1.tar.gz && \
@@ -68,7 +72,8 @@ RUN wget --no-check-certificate -q \
     tar xvfz openjpeg-2.0.0.tar.gz && \
     cd openjpeg-2.0.0 && \
     ../cmake-3.4.1/bin/cmake -DCMAKE_INSTALL_PREFIX=$PGC_GDAL_INSTALL_ROOT/openjpeg-2 && \
-    make install
+    make install && \
+    cd .. && rm -rf openjpeg*
 
 ENV gdal_version 2.1.1
 RUN wget --no-check-certificate -q \
@@ -80,7 +85,8 @@ RUN wget --no-check-certificate -q \
     --with-cfitsio=$PGC_GDAL_INSTALL_ROOT/cfitsio \
     --with-python --with-openjpeg=$PGC_GDAL_INSTALL_ROOT/openjpeg-2 --with-sqlite3=no && \
     make && make install && \
-    cd swig/python && python setup.py install
+    cd swig/python && python setup.py install && \
+    cd ../../.. && rm -rf gdal*
 
 WORKDIR /tmp
 
