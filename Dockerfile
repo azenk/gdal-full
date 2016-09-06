@@ -65,14 +65,15 @@ RUN wget --no-check-certificate -q \
     https://cmake.org/files/v3.4/cmake-3.4.1.tar.gz && \
     tar xvfz cmake-3.4.1.tar.gz && \
     cd cmake-3.4.1 && \
-    ./configure && \
-    gmake
+    ./configure --prefix=$PGC_GDAL_INSTALL_ROOT/cmake && \
+    gmake && gmake install && \
+    cd .. && rm -rf cmake*
 
 RUN wget --no-check-certificate -q \
     https://github.com/PolarGeospatialCenter/asp/raw/master/originals/openjpeg/openjpeg-2.0.0.tar.gz && \
     tar xvfz openjpeg-2.0.0.tar.gz && \
     cd openjpeg-2.0.0 && \
-    ../cmake-3.4.1/bin/cmake -DCMAKE_INSTALL_PREFIX=$PGC_GDAL_INSTALL_ROOT/openjpeg-2 && \
+    $PGC_GDAL_INSTALL_ROOT/cmake/bin/cmake -DCMAKE_INSTALL_PREFIX=$PGC_GDAL_INSTALL_ROOT/openjpeg-2 && \
     make install && \
     cd .. && rm -rf openjpeg*
 
