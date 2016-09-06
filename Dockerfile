@@ -1,12 +1,11 @@
 FROM centos:latest
 
-RUN yum install -y wget
+RUN yum install -y wget bzip2 unzip gcc bison flex readline-devel zlib-devel make gcc-c++ && yum clean all
 
 ENV PGC_GDAL_INSTALL_ROOT /usr/local/gdal
 
 WORKDIR /tmp/gdal_build
 
-RUN yum install -y bzip2
 ENV PATH=$PGC_GDAL_INSTALL_ROOT/anaconda/bin:$PATH
 RUN wget --no-check-certificate -q \
     http://repo.continuum.io/miniconda/Miniconda-3.7.0-Linux-x86_64.sh && \
@@ -15,7 +14,6 @@ RUN wget --no-check-certificate -q \
     conda install --yes scipy jinja2 conda-build dateutil shapely scikit-image && \
     conda clean --all --yes
 
-RUN yum install -y unzip
 RUN wget --no-check-certificate -q \
     https://github.com/bw2/ConfigArgParse/archive/master.zip && \
     unzip master.zip && \
@@ -27,7 +25,6 @@ RUN wget --no-check-certificate -q \
     rm -rf ConfigArgParse-master
 
 ENV vers 0.1
-RUN yum install -y gcc bison flex readline-devel zlib-devel make
 RUN wget --no-check-certificate -q \
     https://github.com/minadyn/conda-postgresql-client/archive/$vers.zip && \
     unzip $vers && \
@@ -44,7 +41,6 @@ RUN wget --no-check-certificate -q \
     cd .. && rm -rf cfitsio*
 
 ENV SWIG_FEATURES -I/usr/share/swig/1.3.40/python -I/usr/share/swig/1.3.40
-RUN yum install -y gcc-c++
 RUN wget --no-check-certificate -q \
     https://github.com/PolarGeospatialCenter/asp/raw/master/originals/geos/geos-3.4.2.tar.bz2 && \
     tar xvfj geos-3.4.2.tar.bz2 && \
