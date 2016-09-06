@@ -12,7 +12,8 @@ RUN wget --no-check-certificate -q \
     http://repo.continuum.io/miniconda/Miniconda-3.7.0-Linux-x86_64.sh && \
     bash Miniconda-3.7.0-Linux-x86_64.sh -b -p $PGC_GDAL_INSTALL_ROOT/anaconda && \
     rm -f Miniconda* && \
-    conda install --yes scipy jinja2 conda-build dateutil shapely scikit-image
+    conda install --yes scipy jinja2 conda-build dateutil shapely scikit-image && \
+    conda clean --all --yes
 
 RUN yum install -y unzip
 RUN wget --no-check-certificate -q \
