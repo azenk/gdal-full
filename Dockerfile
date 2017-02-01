@@ -73,7 +73,7 @@ RUN wget --no-check-certificate -q \
     make install && \
     cd .. && rm -rf openjpeg*
 
-ENV gdal_version 2.1.1
+ENV gdal_version 2.1.3
 RUN wget --no-check-certificate -q \
     http://download.osgeo.org/gdal/$gdal_version/gdal-$gdal_version.tar.gz && \
     tar xvfz gdal-$gdal_version.tar.gz && \
